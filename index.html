@@ -96,7 +96,7 @@
       <div id="courseList"></div>
     </div>
     <div class="card">
-      <h2>📝 Pre-Certification Exam</h2>
+      <h2>📝 Final Exam</h2>
       <p class="lead">When you feel ready, you can begin. You'll have a comfortable <strong>2 hours</strong> to complete it, and it will submit automatically when the time is up — so you can focus fully on doing your best.</p>
       <ul style="font-size:14px;color:var(--muted)">
         <li>Questions appear in <strong>random order</strong>.</li>
@@ -203,10 +203,10 @@ document.getElementById('loginBtn').onclick = ()=>{
   const match = TRAINEES.find(x=>x.id.toLowerCase()===id.toLowerCase());
   if(!match){ err.textContent="Trainee ID not found. Check with your trainer."; return; }
   if(match.pin && match.pin!==pin){ err.textContent="Incorrect PIN."; return; }
-  SESSION = {id:match.id, name:match.name||match.id, loginAt:new Date().toISOString()};
+  SESSION = {id:match.id, name:match.name||match.id, attemptsAllowed:(match.attemptsAllowed||1), loginAt:new Date().toISOString()};
   document.getElementById('whoami').textContent = `${SESSION.name} • ${SESSION.id}`;
   document.getElementById('manualBtn').setAttribute('href', MANUAL_FILE);
-  show('dashCard'); renderCourses(); checkAlreadyTaken();
+  show('dashCard'); renderCourses(); checkAlreadyTaken();  // async; updates the Start button once the Sheet responds
 };
 
 function renderCourses(){
@@ -221,9 +221,13 @@ function renderCourses(){
 }
 
 // ====== START EXAM ======
-document.getElementById('startExamBtn').onclick = ()=>{
+document.getElementById('startExamBtn').onclick = async ()=>{
   if(!EXAM){ alert("Exam not loaded."); return; }
-  if(localStorage.getItem(takenKey())){ checkAlreadyTaken(); window.scrollTo(0,0); return; }
+  // re-check attempts against the Sheet right before starting (in case it just changed)
+  const allowed = SESSION.attemptsAllowed || 1;
+  const used = await getAttemptsUsed();
+  SESSION._used = used; SESSION._allowed = allowed;
+  if(used >= allowed){ checkAlreadyTaken(); window.scrollTo(0,0); return; }
   buildExam(); show('examCard'); startTimer(EXAM.timeLimitMinutes*60);
   window.scrollTo(0,0);
 };
@@ -388,16 +392,37 @@ function submitExam(auto){
 }
 
 function takenKey(){ return 'examTaken_' + SESSION.id; }
-function checkAlreadyTaken(){
-  const done = localStorage.getItem(takenKey());
+
+// Counts completed attempts from the Sheet (Results tab). Falls back to the local browser flag if the Sheet is unreachable.
+async function getAttemptsUsed(){
+  if(SUBMIT_ENDPOINT){
+    try{
+      const r = await fetch(SUBMIT_ENDPOINT + '?type=attempts&id=' + encodeURIComponent(SESSION.id)).then(x=>x.json());
+      if(r && typeof r.attemptsUsed === 'number') return r.attemptsUsed;
+    }catch(e){ /* fall through */ }
+  }
+  // backup: local browser flag (counts as 1 if this browser submitted)
+  return localStorage.getItem(takenKey()) ? 1 : 0;
+}
+
+async function checkAlreadyTaken(){
   const btn = document.getElementById('startExamBtn');
-  if(done){
+  const allowed = SESSION.attemptsAllowed || 1;
+  const used = await getAttemptsUsed();
+  SESSION._used = used; SESSION._allowed = allowed;
+  let m = document.getElementById('takenMsg');
+  if(!m){ m=document.createElement('p'); m.id='takenMsg'; m.style.cssText='font-size:14px;font-weight:600;margin-top:10px';
+    btn.parentNode.appendChild(m); }
+  if(used >= allowed){
     btn.disabled = true;
     btn.textContent = 'Exam completed — thank you!';
-    let m = document.getElementById('takenMsg');
-    if(!m){ m=document.createElement('p'); m.id='takenMsg'; m.style.cssText='color:var(--bad);font-size:14px;font-weight:600;margin-top:10px';
-      btn.parentNode.appendChild(m); }
-    m.textContent = 'You have already completed this exam — nice job! It is designed to be taken once. If you need anything, your trainer is happy to help.';
+    m.style.color = 'var(--bad)';
+    m.textContent = 'You have used all of your attempts for this exam — wonderful effort! If you need another attempt, your trainer can arrange that for you.';
+  } else {
+    btn.disabled = false;
+    btn.textContent = "I'm ready — start the exam";
+    if(used > 0){ m.style.color='var(--muted)'; m.textContent = `You have used ${used} of ${allowed} attempts. You're welcome to try again whenever you feel ready.`; }
+    else { m.textContent=''; }
   }
 }
 function recordResult(r){
