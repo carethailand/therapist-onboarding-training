@@ -1,0 +1,807 @@
+{
+  "examTitle": "Therapist Pre-Certification Exam",
+  "timeLimitMinutes": 120,
+  "totalMarks": 62,
+  "passMark": 53,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "prompt": "What are the three components of the \"Three-Part Contingency\"?",
+      "options": [
+        "Action, Belief, Consequence",
+        "Antecedent, Behavior, Consequence",
+        "Association, Behavior, Control",
+        "Antecedent, Belief, Condition"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q2",
+      "type": "mcq",
+      "prompt": "Which term describes learning through consequences?",
+      "options": [
+        "Classical Conditioning",
+        "Respondent Conditioning",
+        "Operant Conditioning",
+        "Observational Learning"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q3",
+      "type": "mcq",
+      "prompt": "If a behavior increases because a stimulus was added following the behavior, this is:",
+      "options": [
+        "Positive Reinforcement",
+        "Negative Reinforcement",
+        "Positive Punishment",
+        "Negative Punishment"
+      ],
+      "points": 1,
+      "answer": 0
+    },
+    {
+      "id": "q4",
+      "type": "mcq",
+      "prompt": "What occurs when a previously reinforced behavior is no longer reinforced, leading to a temporary increase in the behavior?",
+      "options": [
+        "Spontaneous Recovery",
+        "Extinction Burst",
+        "Stimulus Control",
+        "Satiation"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q5",
+      "type": "mcq",
+      "prompt": "Which schedule of reinforcement provides a reward after an average number of responses?",
+      "options": [
+        "Fixed Ratio (FR)",
+        "Fixed Interval (FI)",
+        "Variable Ratio (VR)",
+        "Variable Interval (VI)"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q6",
+      "type": "mcq",
+      "prompt": "Reinforcement is delivered on average every 2 minutes in which the behaviors occur. What reinforcement schedule is this?",
+      "options": [
+        "FI-2",
+        "FR-2",
+        "VI-2",
+        "VR-2"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q7",
+      "type": "mcq",
+      "prompt": "Which antecedent increases or decreases the value of a consequence?",
+      "options": [
+        "Abolishing Operation",
+        "Establishing Operation",
+        "Motivating Operation",
+        "SD"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q8",
+      "type": "mcq",
+      "prompt": "Autism Spectrum Disorder (ASD) is officially classified as a:",
+      "options": [
+        "Mental illness developed in adulthood",
+        "Neurodevelopmental disorder",
+        "Temporary developmental delay",
+        "Personality disorder"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q9",
+      "type": "mcq",
+      "prompt": "The \"Triad of Impairments\" in Autism includes difficulties in which areas?",
+      "options": [
+        "Reading, writing, and math",
+        "Memory, focus, and sleep",
+        "Social communication, social interaction, and restricted/repetitive behaviors",
+        "Physical strength, balance, and vision"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q10",
+      "type": "mcq",
+      "prompt": "What is \"Joint Attention\"?",
+      "options": [
+        "Paying attention to two tasks at once",
+        "Sharing focus on an object or event with another person",
+        "Following a schedule independently",
+        "Talking to oneself during play"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q11",
+      "type": "mcq",
+      "prompt": "Which of these is a common co-occurring (comorbid) condition with ASD?",
+      "options": [
+        "ADHD",
+        "Sleep Disorders",
+        "Gastrointestinal Issues",
+        "All of the above"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q12",
+      "type": "mcq",
+      "prompt": "Antecedent interventions are considered:",
+      "options": [
+        "Reactive strategies",
+        "Proactive strategies",
+        "Consequence-based strategies",
+        "Punishment-based strategies"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q13",
+      "type": "mcq",
+      "prompt": "The Premack Principle is commonly referred to as:",
+      "options": [
+        "Errorless Learning",
+        "The \"First-Then\" principle",
+        "Time Delay",
+        "Demand Fading"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q14",
+      "type": "mcq",
+      "prompt": "A teacher asks a student to perform three easy tasks before a hard task. This is:",
+      "options": [
+        "Task Modification",
+        "Behavior Momentum (High-Probability Request Sequence)",
+        "Functional Communication Training",
+        "Non-contingent Reinforcement"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q15",
+      "type": "mcq",
+      "prompt": "What acronym is used to remember the four functions of behavior?",
+      "options": [
+        "FAST",
+        "EATS",
+        "ABCD",
+        "HELP"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q16",
+      "type": "mcq",
+      "prompt": "Which function involves engaging in behavior to get away from a task?",
+      "options": [
+        "Attention",
+        "Tangible",
+        "Escape",
+        "Sensory"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q17",
+      "type": "mcq",
+      "prompt": "If a child rocks back and forth because it \"feels good,\" the function is likely:",
+      "options": [
+        "Social Attention",
+        "Automatic/Sensory",
+        "Tangible Access",
+        "Task Avoidance"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q18",
+      "type": "mcq",
+      "prompt": "What is the primary purpose of a Functional Behavior Assessment (FBA)?",
+      "options": [
+        "To punish the student",
+        "To identify the purpose or function of a behavior",
+        "To determine a medical diagnosis",
+        "To assign a grade"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q19",
+      "type": "mcq",
+      "prompt": "An Operational Definition must be:",
+      "options": [
+        "Based on the therapist's feelings",
+        "Subjective and detailed",
+        "Clear, objective, and measurable",
+        "Focused on a child’s internal motives"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q20",
+      "type": "mcq",
+      "prompt": "A \"Replacement Behavior\" should:",
+      "options": [
+        "Be more difficult to perform than the problem behavior",
+        "Serve the same function as the challenging behavior",
+        "Be unrelated to the original behavior",
+        "Only be taught after the problem behavior stops"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q21",
+      "type": "mcq",
+      "prompt": "Differential Reinforcement of Alternative Behavior (DRA) involves:",
+      "options": [
+        "Reinforcing any behavior other than the problem behavior",
+        "Reinforcing a specific appropriate behavior that serves the same function",
+        "Punishing the problem behavior",
+        "Ignoring the student completely"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q22",
+      "type": "mcq",
+      "prompt": "Reinforcement delivered on a timer regardless of behavior is:",
+      "options": [
+        "Contingent Reinforcement",
+        "Non-Contingent Reinforcement (NCR)",
+        "Primary Reinforcement",
+        "Secondary Reinforcement"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q23",
+      "type": "mcq",
+      "prompt": "You reinforce the client whenever they are NOT engaged in verbal stereotypy. What type of differential reinforcement is this?",
+      "options": [
+        "DRA",
+        "DRI",
+        "DRO",
+        "DRL"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q24",
+      "type": "mcq",
+      "prompt": "This signals that reinforcement is available:",
+      "options": [
+        "SD",
+        "Sdelta",
+        "SR-",
+        "VR-3"
+      ],
+      "points": 1,
+      "answer": 0
+    },
+    {
+      "id": "q25",
+      "type": "mcq",
+      "prompt": "Presenting the same instruction (SD) repeatedly in a row is called:",
+      "options": [
+        "Random Rotation",
+        "Mass Trial",
+        "Discrimination Training",
+        "Generalization"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q26",
+      "type": "mcq",
+      "prompt": "Any behavior the interventionist engages in that increases the likelihood that the learner will respond correctly is known as:",
+      "options": [
+        "Shaping",
+        "Extinction",
+        "Discrete Trial Training",
+        "Prompting"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q27",
+      "type": "mcq",
+      "prompt": "Which prompting procedure starts with the most intrusive prompt?",
+      "options": [
+        "Least-to-Most (LTM)",
+        "Most-to-Least (MTL)",
+        "Time Delay",
+        "Stimulus Fading"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q28",
+      "type": "mcq",
+      "prompt": "In this type of prompt, you steer a student to complete a task by placing your hand on their elbow.",
+      "options": [
+        "Full physical",
+        "Verbal",
+        "Partial Physical",
+        "Modeling"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q29",
+      "type": "mcq",
+      "prompt": "Gestures, positional, and looking at the targeted response are all examples of:",
+      "options": [
+        "Controlling prompts",
+        "Non-controlling prompts",
+        "Response Prompts",
+        "Stimulus Prompts"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q30",
+      "type": "mcq",
+      "prompt": "Discrete Trial Training (DTT) is characterized by:",
+      "options": [
+        "Learning through natural play only",
+        "Clear beginnings and ends with repeated trials",
+        "Never using reinforcement",
+        "Allowing the student to lead the entire session"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q31",
+      "type": "mcq",
+      "prompt": "Which verbal operant involves a speaker repeating what someone else said?",
+      "options": [
+        "Mand",
+        "Tact",
+        "Echoic",
+        "Intraverbal"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q32",
+      "type": "mcq",
+      "prompt": "A little boy looks at his stuffed animal and says “Zebra!” This is an example of a:",
+      "options": [
+        "Intraverbal",
+        "Echoic",
+        "Autoclitic",
+        "Tact"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q33",
+      "type": "mcq",
+      "prompt": "A \"Mand\" is essentially a:",
+      "options": [
+        "Label",
+        "Request",
+        "Response to a question",
+        "Repeat of a sound"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q34",
+      "type": "mcq",
+      "prompt": "Natural Environment Training (NET) focuses on:",
+      "options": [
+        "Sitting at a desk for 3 hours",
+        "Using the learner's current motivation in natural situations",
+        "Rote memorization",
+        "Strict, repetitive drills"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q35",
+      "type": "mcq",
+      "prompt": "The breakdown of a task into its individual components and steps is:",
+      "options": [
+        "Discrete Trial",
+        "Forward Chaining",
+        "Stimulus Control",
+        "Task Analysis"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q36",
+      "type": "mcq",
+      "prompt": "In Forward Chaining, the learner is taught:",
+      "options": [
+        "The last step first",
+        "Every step at the same time",
+        "The first step in the sequence first",
+        "Only the hardest steps"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q37",
+      "type": "mcq",
+      "prompt": "Which chaining method has the learner complete only the final step independently first?",
+      "options": [
+        "Forward Chaining",
+        "Backward Chaining",
+        "Total Task Chaining",
+        "Global Chaining"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q38",
+      "type": "mcq",
+      "prompt": "What is true about shaping?",
+      "options": [
+        "All responses are reinforced",
+        "No responses are reinforced",
+        "Gradual improvements toward the terminal behavior are reinforced",
+        "Often used to teach a task with multiple steps"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q39",
+      "type": "mcq",
+      "prompt": "What is meant by the term “terminal goal” when discussing shaping?",
+      "options": [
+        "The long-term overall behavior objective",
+        "The small steps toward a new behavior",
+        "The criteria for moving steps",
+        "None of the above"
+      ],
+      "points": 1,
+      "answer": 0
+    },
+    {
+      "id": "q40",
+      "type": "mcq",
+      "prompt": "Which of the following might be a successive approximation of a student asking for a toy?",
+      "options": [
+        "The student grabs the toy off the shelf",
+        "The student makes a “t” sound",
+        "The student says, “I need to go to the bathroom.”",
+        "None of the above"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q41",
+      "type": "mcq",
+      "prompt": "Maintenance refers to:",
+      "options": [
+        "Performing a skill with different people",
+        "Continued performance of a behavior over time after training ends",
+        "Learning a brand new skill",
+        "Changing a behavior plan"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q42",
+      "type": "mcq",
+      "prompt": "\"Pairing\" in a clinical setting involves:",
+      "options": [
+        "Putting two students together",
+        "Associating the therapist with preferred items and fun",
+        "Using two different punishments",
+        "Correcting every mistake"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q43",
+      "type": "mcq",
+      "prompt": "Stimulus Generalization occurs when:",
+      "options": [
+        "A learner only responds to one specific person",
+        "A learner performs a skill across different people, settings, or materials",
+        "A learner forgets a skill",
+        "A learner requires a prompt to respond"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q44",
+      "type": "mcq",
+      "prompt": "\"Errorless Learning\" usually involves:",
+      "options": [
+        "Letting the child make 3 mistakes before helping",
+        "Prompting immediately to prevent an error",
+        "No reinforcement",
+        "Only working on easy tasks"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q45",
+      "type": "mcq",
+      "prompt": "Which is an example of an Intraverbal?",
+      "options": [
+        "Pointing to a dog",
+        "Saying \"Dog\" when you see a dog",
+        "Saying \"Bark\" when someone says \"A dog goes...\"",
+        "Asking for a dog"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q46",
+      "type": "mcq",
+      "prompt": "\"Frequency\" in data collection refers to:",
+      "options": [
+        "How long a behavior lasts",
+        "How many times a behavior happens",
+        "The time between instruction and response",
+        "The intensity of behavior"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q47",
+      "type": "mcq",
+      "prompt": "Frequency and rate are often used interchangeably. Which statement is correct?",
+      "options": [
+        "Frequency is more accurate than rate",
+        "Rate has greater reliability than frequency",
+        "Rate refers to frequency with the addition of a time component",
+        "Only the rate is event recording"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q48",
+      "type": "mcq",
+      "prompt": "Measuring the time from the start of a behavior to the end is:",
+      "options": [
+        "Frequency",
+        "Duration",
+        "Latency",
+        "IRT"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q49",
+      "type": "mcq",
+      "prompt": "You are recording the time it takes from the presentation of the demand (SD) to the first instance of behavior. What are you measuring?",
+      "options": [
+        "Frequency",
+        "Duration",
+        "Latency",
+        "IRT"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q50",
+      "type": "mcq",
+      "prompt": "Which measurement requires the behavior to occur throughout the entire interval?",
+      "options": [
+        "Partial Interval",
+        "Whole Interval",
+        "Momentary Time Sampling",
+        "Frequency"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q51",
+      "type": "mcq",
+      "prompt": "Partial Interval Recording tends to:",
+      "options": [
+        "Underestimate behavior",
+        "Overestimate behavior",
+        "Be the most accurate measurement",
+        "Only be used for long behaviors"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q52",
+      "type": "mcq",
+      "prompt": "A preference assessment where items are not replaced once chosen is:",
+      "options": [
+        "MSW",
+        "MSWO",
+        "Free Operant",
+        "Paired Choice"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q53",
+      "type": "mcq",
+      "prompt": "The most common form of graph used in ABA is:",
+      "options": [
+        "Line Graph",
+        "Pie Chart",
+        "Histogram",
+        "Scatter Plot"
+      ],
+      "points": 1,
+      "answer": 0
+    },
+    {
+      "id": "q54",
+      "type": "mcq",
+      "prompt": "What is the primary role of an RBT?",
+      "options": [
+        "Design behavior plans",
+        "Implement the plan written by the BCBA",
+        "Diagnose ASD",
+        "Provide family therapy"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q55",
+      "type": "mcq",
+      "prompt": "What do you need to do at the very minimum to be sure you’re ready for a successful session?",
+      "options": [
+        "You can just wing it",
+        "A cup of coffee is all you need",
+        "You should know what you are measuring and have the materials required before session starts",
+        "Conduct a functional behavioral assessment"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q56",
+      "type": "mcq",
+      "prompt": "When working with a client, whose preferences should take priority?",
+      "options": [
+        "Parent",
+        "Teacher",
+        "BCBA",
+        "Client"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q57",
+      "type": "mcq",
+      "prompt": "Which of the following is the best example of maintaining client dignity?",
+      "options": [
+        "Sharing a client’s private information with other RBTs",
+        "Explaining to the waitress that your client has autism",
+        "Not restricting the client’s right to food or water",
+        "Sharing a client’s information with a peer"
+      ],
+      "points": 1,
+      "answer": 2
+    },
+    {
+      "id": "q58",
+      "type": "mcq",
+      "prompt": "What does HIPAA protect?",
+      "options": [
+        "Therapist salaries",
+        "Client's private health information",
+        "School records only",
+        "Building safety"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q59",
+      "type": "mcq",
+      "prompt": "Professional boundaries include avoiding \"Dual Relationships,\" which means:",
+      "options": [
+        "Working with two clients at once",
+        "Being both a therapist and a friend/babysitter to the family",
+        "Having two supervisors",
+        "Working in two different clinics"
+      ],
+      "points": 1,
+      "answer": 1
+    },
+    {
+      "id": "q60",
+      "type": "mcq",
+      "prompt": "Which of the following is the best way to communicate treatment progress with parents?",
+      "options": [
+        "“We changed her reinforcement schedule from a FR5 to a VR3 today.”",
+        "“We probed out handwashing today.”",
+        "“The client’s behavior was really bad today.”",
+        "“Today we worked on brushing her teeth. She successfully applied the toothpaste and brushed by herself for 30 seconds.”"
+      ],
+      "points": 1,
+      "answer": 3
+    },
+    {
+      "id": "q61",
+      "type": "multiselect",
+      "prompt": "Your students are taking a test, and you write “Remember, no talking on the board”. During the test, you hear a noise and you point to the note on the board. What types of prompting are you using? Select all that apply:",
+      "options": [
+        "Full Physical",
+        "Partial Physical",
+        "Gestural",
+        "Verbal",
+        "Auditory",
+        "Textual",
+        "Positional"
+      ],
+      "points": 2,
+      "answer": [
+        2,
+        5
+      ]
+    }
+  ]
+}

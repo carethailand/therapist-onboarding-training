@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Therapist Training Portal</title>
+<style>
+  :root{
+    --brand:#2a6f5e; --brand-dark:#1f5546; --accent:#e8a13a;
+    --bg:#f4f6f5; --card:#ffffff; --ink:#22332e; --muted:#6b7c76;
+    --line:#dde5e2; --good:#2a8f5e; --bad:#c0492f; --warn:#c97a18;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5}
+  header{background:var(--brand);color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  header .logo{font-weight:700;font-size:18px;letter-spacing:.3px}
+  header .who{font-size:13px;opacity:.9}
+  .wrap{max-width:920px;margin:0 auto;padding:26px 18px 80px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  h1{font-size:24px;margin:0 0 6px} h2{font-size:18px;margin:0 0 14px;color:var(--brand-dark)}
+  p.lead{color:var(--muted);margin-top:0}
+  label{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+  input[type=text],input[type=password]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+  .btn{display:inline-block;background:var(--brand);color:#fff;border:none;padding:12px 22px;border-radius:9px;
+    font-size:15px;font-weight:600;cursor:pointer;transition:.15s}
+  .btn:hover{background:var(--brand-dark)} .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.secondary{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+  .err{color:var(--bad);font-size:13px;margin-top:8px;min-height:16px}
+  .hidden{display:none!important}
+  .course{display:flex;gap:14px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:10px;margin-bottom:12px}
+  .course .num{flex:0 0 30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .course .meta{flex:1} .course .meta h3{margin:0 0 3px;font-size:15px} .course .meta p{margin:0;font-size:13px;color:var(--muted)}
+  .course a.open{align-self:center;white-space:nowrap}
+  .timer{position:sticky;top:0;z-index:10;background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:600;margin-bottom:18px}
+  .timer.warn{border-color:var(--warn);color:var(--warn)} .timer.danger{border-color:var(--bad);color:var(--bad)}
+  .q{padding:18px 0;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:none}
+  .q .qhead{font-weight:600;margin-bottom:12px;display:flex;gap:10px}
+  .q .qnum{flex:0 0 auto;color:var(--brand);font-weight:700}
+  .opt{display:block;padding:11px 14px;border:1px solid var(--line);border-radius:9px;margin-bottom:8px;cursor:pointer;transition:.12s}
+  .opt:hover{border-color:var(--brand);background:#f3f8f6}
+  .opt.sel{border-color:var(--brand);background:#e8f2ee;font-weight:600}
+  .opt input{margin-right:9px}
+  .match-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+  .match-row .term{flex:0 0 38%;font-weight:600;padding:10px;background:#f3f8f6;border-radius:8px}
+  .match-row select{flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:14px}
+  .dnd-sentence{font-size:16px;line-height:2.4;margin-bottom:14px}
+  .blank{display:inline-block;min-width:130px;border-bottom:2px dashed var(--brand);padding:3px 8px;margin:0 4px;
+    text-align:center;color:var(--brand);font-weight:600;min-height:30px;background:#f3f8f6;border-radius:6px 6px 0 0}
+  .blank.filled{border-bottom:2px solid var(--brand);background:#e8f2ee}
+  .wordbank{display:flex;flex-wrap:wrap;gap:10px;padding:14px;background:#f7faf9;border:1px dashed var(--line);border-radius:10px}
+  .chip{padding:8px 14px;background:#fff;border:1px solid var(--brand);border-radius:20px;cursor:grab;font-weight:600;color:var(--brand);user-select:none}
+  .chip.used{opacity:.35;pointer-events:none}
+  .progress{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:6px}
+  .progress > div{height:100%;background:var(--brand);width:0;transition:.3s}
+  .result-big{font-size:46px;font-weight:800;margin:6px 0}
+  .badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:700;font-size:14px}
+  .badge.pass{background:#e3f3ea;color:var(--good)} .badge.fail{background:#fbeae6;color:var(--bad)}
+  .note{background:#fff8ec;border:1px solid #f0dcb4;border-radius:10px;padding:12px 14px;font-size:13px;color:#7a5a16;margin-top:14px}
+  .stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🧠 Therapist Training Portal</div>
+  <div class="who" id="whoami"></div>
+</header>
+<div class="wrap">
+
+  <!-- LOGIN -->
+  <div class="card" id="loginCard">
+    <h1>Welcome</h1>
+    <p class="lead">Self-paced learning &amp; pre-certification exam. Enter the Trainee ID assigned to you by your trainer.</p>
+    <label for="tid">Trainee ID</label>
+    <input type="text" id="tid" placeholder="e.g. RBT-2026-001" autocomplete="off">
+    <label for="pin">PIN</label>
+    <input type="password" id="pin" placeholder="4-digit PIN" autocomplete="off">
+    <div class="err" id="loginErr"></div>
+    <button class="btn" id="loginBtn" style="margin-top:14px">Log in</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="hidden" id="dashCard">
+    <div class="card">
+      <h2>📚 Self-Paced Coursework</h2>
+      <p class="lead">Work through each module in Canva before attempting the exam.</p>
+      <a class="btn" id="manualBtn" href="#" download style="margin-bottom:18px">⬇ Download Training Manual (PDF)</a>
+      <div id="courseList"></div>
+    </div>
+    <div class="card">
+      <h2>📝 Pre-Certification Exam</h2>
+      <p class="lead">When you are ready, start the exam. You will have <strong>2 hours</strong>. The exam auto-submits when time runs out.</p>
+      <ul style="font-size:14px;color:var(--muted)">
+        <li>Questions appear in <strong>random order</strong>.</li>
+        <li>Your <strong>time</strong> and <strong>score</strong> are recorded automatically.</li>
+        <li>You may only take the exam <strong>once</strong> per session.</li>
+      </ul>
+      <button class="btn" id="startExamBtn" style="margin-top:8px">Start Exam</button>
+    </div>
+  </div>
+
+  <!-- EXAM -->
+  <div class="hidden" id="examCard">
+    <div class="timer" id="timer"><span>⏱ Time remaining</span><span id="clock">2:00:00</span></div>
+    <div class="card">
+      <div id="examMeta" style="font-size:13px;color:var(--muted);margin-bottom:10px"></div>
+      <div class="progress"><div id="progBar"></div></div>
+      <div id="questions" style="margin-top:18px"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn" id="submitBtn">Submit Exam</button>
+        <span id="answeredCount" style="font-size:13px;color:var(--muted)"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THANK YOU (trainee view) -->
+  <div class="hidden" id="thanksCard">
+    <div class="card" style="text-align:center;padding:46px 24px">
+      <div style="font-size:52px">✅</div>
+      <h1>Thank you for submitting</h1>
+      <p class="lead" style="font-size:16px">Your exam has been received. We will get in touch with you regarding your result.</p>
+      <p style="font-size:13px;color:var(--muted)">You may now close this window.</p>
+    </div>
+    <!-- Trainer-only result panel: hidden from trainee. Toggle by typing the trainer code. -->
+    <div class="card hidden" id="trainerPanel">
+      <h2>🔒 Trainer Result Panel</h2>
+      <div id="trainerResult"></div>
+      <div class="note">This panel is only visible to trainers (after entering the trainer code). The trainee never sees the score on screen.</div>
+    </div>
+    <div class="card">
+      <p style="font-size:12px;color:var(--muted);margin:0">Trainer access: <input type="password" id="trainerCode" placeholder="trainer code" style="width:160px;display:inline-block;padding:6px 10px"> <button class="btn ghost" id="trainerBtn" style="padding:6px 14px">View result</button></p>
+    </div>
+  </div>
+
+</div>
+<footer>Demo build • Static prototype for GitHub Pages • Not the final secured ABAT exam system</footer>
+
+<script>
+// ====== CONFIG ======
+const TRAINER_CODE = "trainer2026";   // change this; gates the on-screen result panel
+const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwfhRZdD8HRxgKwUJjgHjmhEOBdejGyRARPWbCUhwhV3GKD_4MP5yS0v7IV_quhdtyD/exec";           // PASTE your Google Apps Script Web App URL here to record results (see RESULTS_SHEET_SETUP.md).
+const MANUAL_FILE = "Onboarding-Manual-2026.pdf";  // training manual served from the repo; change filename if you replace it.
+
+let TRAINEES = [], EXAM = null, SESSION = null, TIMER = null, REMAINING = 0, START_TS = 0;
+let LAST_RESULT = null;
+
+// Course links (edit these to your real Canva share links)
+const COURSES = [
+  {title:"Module 1 — ABA Foundations", desc:"Three-part contingency, reinforcement, operant conditioning", url:"https://www.canva.com/"},
+  {title:"Module 2 — Autism & Functions of Behavior", desc:"ASD, FBA, four functions, motivating operations", url:"https://www.canva.com/"},
+  {title:"Module 3 — Teaching Procedures", desc:"Prompting, DTT, chaining, shaping, verbal operants", url:"https://www.canva.com/"},
+  {title:"Module 4 — Measurement & Ethics", desc:"Data collection, graphing, RBT role, HIPAA, dignity", url:"https://www.canva.com/"}
+];
+
+// ====== LOAD DATA ======
+async function loadData(){
+  try{
+    const [t,e] = await Promise.all([
+      fetch('trainees.json').then(r=>r.json()),
+      fetch('questions.json').then(r=>r.json())
+    ]);
+    TRAINEES = t.trainees; EXAM = e;
+  }catch(err){
+    document.getElementById('loginErr').textContent =
+      "Could not load data files. (When testing locally, run a local server — see the spec doc.)";
+  }
+}
+loadData();
+
+// ====== LOGIN ======
+document.getElementById('loginBtn').onclick = ()=>{
+  const id = document.getElementById('tid').value.trim();
+  const pin = document.getElementById('pin').value.trim();
+  const err = document.getElementById('loginErr');
+  if(!TRAINEES.length){ err.textContent="Trainee data not loaded yet."; return; }
+  const match = TRAINEES.find(x=>x.id.toLowerCase()===id.toLowerCase());
+  if(!match){ err.textContent="Trainee ID not found. Check with your trainer."; return; }
+  if(match.pin && match.pin!==pin){ err.textContent="Incorrect PIN."; return; }
+  SESSION = {id:match.id, name:match.name||match.id, loginAt:new Date().toISOString()};
+  document.getElementById('whoami').textContent = `${SESSION.name} • ${SESSION.id}`;
+  document.getElementById('manualBtn').setAttribute('href', MANUAL_FILE);
+  show('dashCard'); renderCourses(); checkAlreadyTaken();
+};
+
+function renderCourses(){
+  const c = document.getElementById('courseList'); c.innerHTML='';
+  COURSES.forEach((m,i)=>{
+    const d=document.createElement('div'); d.className='course';
+    d.innerHTML=`<div class="num">${i+1}</div>
+      <div class="meta"><h3>${m.title}</h3><p>${m.desc}</p></div>
+      <a class="btn secondary open" href="${m.url}" target="_blank" rel="noopener">Open in Canva ↗</a>`;
+    c.appendChild(d);
+  });
+}
+
+// ====== START EXAM ======
+document.getElementById('startExamBtn').onclick = ()=>{
+  if(!EXAM){ alert("Exam not loaded."); return; }
+  if(localStorage.getItem(takenKey())){ checkAlreadyTaken(); window.scrollTo(0,0); return; }
+  buildExam(); show('examCard'); startTimer(EXAM.timeLimitMinutes*60);
+  window.scrollTo(0,0);
+};
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+let RENDERED = []; // questions in displayed order, with per-question shuffle maps
+
+function buildExam(){
+  const meta=document.getElementById('examMeta');
+  meta.textContent = `${EXAM.examTitle} — ${EXAM.questions.length} questions • Total ${EXAM.totalMarks} marks • Pass mark ${EXAM.passMark}`;
+  RENDERED = shuffle(EXAM.questions);
+  const box=document.getElementById('questions'); box.innerHTML='';
+  RENDERED.forEach((q,di)=>{ box.appendChild(renderQuestion(q,di)); });
+  updateAnswered();
+}
+
+function renderQuestion(q, di){
+  const wrap=document.createElement('div'); wrap.className='q'; wrap.dataset.qid=q.id;
+  const head=`<div class="qhead"><span class="qnum">${di+1}.</span><span>${q.prompt}${q.points>1?` <em style="color:var(--muted);font-weight:400">(${q.points} marks)</em>`:''}</span></div>`;
+  let body='';
+  if(q.type==='mcq'){
+    const order = shuffle(q.options.map((o,i)=>i)); q._order=order;
+    body='<div>'+order.map((origIdx,pos)=>
+      `<label class="opt"><input type="radio" name="${q.id}" value="${origIdx}">${q.options[origIdx]}</label>`
+    ).join('')+'</div>';
+  } else if(q.type==='multiselect'){
+    const order = shuffle(q.options.map((o,i)=>i)); q._order=order;
+    body='<div>'+order.map(origIdx=>
+      `<label class="opt"><input type="checkbox" name="${q.id}" value="${origIdx}">${q.options[origIdx]}</label>`
+    ).join('')+'</div>';
+  } else if(q.type==='matching'){
+    const rightOrder = shuffle(q.right.map((r,i)=>i)); q._rightOrder=rightOrder;
+    body=q.left.map((term,li)=>
+      `<div class="match-row"><div class="term">${term}</div>
+        <select name="${q.id}_${li}"><option value="">— choose —</option>
+        ${rightOrder.map(ri=>`<option value="${ri}">${q.right[ri]}</option>`).join('')}
+        </select></div>`).join('');
+  } else if(q.type==='draganddrop'){
+    let s=''; q.textParts.forEach((part,pi)=>{ s+=`<span>${part}</span>`;
+      if(pi<q.textParts.length-1) s+=`<span class="blank" data-qid="${q.id}" data-blank="${pi}"></span>`; });
+    body=`<div class="dnd-sentence">${s}</div><div class="wordbank">${shuffle(q.wordBank).map(w=>`<span class="chip" draggable="true" data-word="${w}">${w}</span>`).join('')}</div>`;
+  }
+  wrap.innerHTML=head+body;
+  // listeners
+  wrap.querySelectorAll('.opt input').forEach(inp=>inp.addEventListener('change',()=>{
+    if(inp.type==='radio'){wrap.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));}
+    inp.closest('.opt').classList.toggle('sel', inp.checked); updateAnswered();
+  }));
+  wrap.querySelectorAll('select').forEach(s=>s.addEventListener('change',updateAnswered));
+  if(q.type==='draganddrop') wireDnD(wrap);
+  return wrap;
+}
+
+function wireDnD(wrap){
+  let dragged=null;
+  wrap.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('dragstart',e=>{dragged=c;e.dataTransfer.setData('text',c.dataset.word);});
+    c.addEventListener('click',()=>{ // click also returns chip to bank
+      if(c.classList.contains('used')){c.classList.remove('used');
+        wrap.querySelectorAll('.blank').forEach(b=>{if(b.dataset.word===c.dataset.word){b.textContent='';b.classList.remove('filled');delete b.dataset.word;}});
+        updateAnswered();}
+    });
+  });
+  wrap.querySelectorAll('.blank').forEach(b=>{
+    b.addEventListener('dragover',e=>e.preventDefault());
+    b.addEventListener('drop',e=>{e.preventDefault();
+      const w=e.dataTransfer.getData('text');
+      // free previous chip in this blank
+      if(b.dataset.word){wrap.querySelectorAll('.chip').forEach(c=>{if(c.dataset.word===b.dataset.word)c.classList.remove('used');});}
+      b.textContent=w; b.dataset.word=w; b.classList.add('filled');
+      wrap.querySelectorAll('.chip').forEach(c=>{if(c.dataset.word===w)c.classList.add('used');});
+      updateAnswered();
+    });
+    b.addEventListener('click',()=>{ if(b.dataset.word){
+      wrap.querySelectorAll('.chip').forEach(c=>{if(c.dataset.word===b.dataset.word)c.classList.remove('used');});
+      b.textContent='';b.classList.remove('filled');delete b.dataset.word;updateAnswered();}});
+  });
+}
+
+function updateAnswered(){
+  let done=0;
+  RENDERED.forEach(q=>{
+    const w=document.querySelector(`.q[data-qid="${q.id}"]`);
+    if(q.type==='mcq'||q.type==='multiselect'){ if(w.querySelector('input:checked')) done++; }
+    else if(q.type==='matching'){ if([...w.querySelectorAll('select')].every(s=>s.value!=='')) done++; }
+    else if(q.type==='draganddrop'){ if([...w.querySelectorAll('.blank')].every(b=>b.dataset.word)) done++; }
+  });
+  document.getElementById('progBar').style.width=(done/RENDERED.length*100)+'%';
+  document.getElementById('answeredCount').textContent=`${done} of ${RENDERED.length} answered`;
+}
+
+// ====== TIMER ======
+function startTimer(sec){
+  REMAINING=sec; START_TS=Date.now();
+  tick(); TIMER=setInterval(tick,1000);
+}
+function tick(){
+  const c=document.getElementById('clock'), t=document.getElementById('timer');
+  const h=Math.floor(REMAINING/3600), m=Math.floor((REMAINING%3600)/60), s=REMAINING%60;
+  c.textContent=`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  t.classList.toggle('warn', REMAINING<=600 && REMAINING>120);
+  t.classList.toggle('danger', REMAINING<=120);
+  if(REMAINING<=0){clearInterval(TIMER); submitExam(true); return;}
+  REMAINING--;
+}
+
+// ====== SUBMIT & SCORE ======
+document.getElementById('submitBtn').onclick=()=>{
+  const done=document.getElementById('answeredCount').textContent;
+  if(!confirm(`You answered ${done}.\n\nSubmit your exam now? You cannot change answers after submitting.`)) return;
+  submitExam(false);
+};
+
+function gradeQuestion(q){
+  const w=document.querySelector(`.q[data-qid="${q.id}"]`);
+  if(q.type==='mcq'){
+    const sel=w.querySelector('input:checked');
+    return (sel && Number(sel.value)===q.answer) ? q.points : 0;
+  }
+  if(q.type==='multiselect'){
+    const picked=[...w.querySelectorAll('input:checked')].map(i=>Number(i.value)).sort();
+    const correct=q.answer.slice().sort();
+    return (picked.length===correct.length && picked.every((v,i)=>v===correct[i])) ? q.points : 0;
+  }
+  if(q.type==='matching'){
+    let got=0; q.left.forEach((_,li)=>{ const sel=w.querySelector(`select[name="${q.id}_${li}"]`);
+      if(sel && Number(sel.value)===q.answer[li]) got++; });
+    return Math.round(q.points * got / q.left.length);
+  }
+  if(q.type==='draganddrop'){
+    let got=0; w.querySelectorAll('.blank').forEach(b=>{ const bi=Number(b.dataset.blank);
+      if(b.dataset.word===q.answer[bi]) got++; });
+    return Math.round(q.points * got / q.answer.length);
+  }
+  return 0;
+}
+
+function submitExam(auto){
+  if(TIMER) clearInterval(TIMER);
+  let score=0; EXAM.questions.forEach(q=>score+=gradeQuestion(q));
+  const total=EXAM.totalMarks;
+  const pct=Math.round(score/total*1000)/10;
+  const passed = score>=EXAM.passMark;
+  const elapsedSec=Math.round((Date.now()-START_TS)/1000);
+  const elapsedMin=Math.round(elapsedSec/60*10)/10;
+  LAST_RESULT={
+    traineeId:SESSION.id, traineeName:SESSION.name,
+    submittedAt:new Date().toISOString(), autoSubmitted:auto,
+    score, total, percent:pct, passMark:EXAM.passMark, passed,
+    timeUsedSeconds:elapsedSec, timeUsedMinutes:elapsedMin
+  };
+  recordResult(LAST_RESULT);
+  show('thanksCard');
+  window.scrollTo(0,0);
+}
+
+function takenKey(){ return 'examTaken_' + SESSION.id; }
+function checkAlreadyTaken(){
+  const done = localStorage.getItem(takenKey());
+  const btn = document.getElementById('startExamBtn');
+  if(done){
+    btn.disabled = true;
+    btn.textContent = 'Exam already completed';
+    let m = document.getElementById('takenMsg');
+    if(!m){ m=document.createElement('p'); m.id='takenMsg'; m.style.cssText='color:var(--bad);font-size:14px;font-weight:600;margin-top:10px';
+      btn.parentNode.appendChild(m); }
+    m.textContent = 'You have already submitted this exam. Each trainee may take it once. Contact your trainer if you need a reset.';
+  }
+}
+function recordResult(r){
+  localStorage.setItem(takenKey(), JSON.stringify({submittedAt:r.submittedAt}));
+  // In demo, just log. To go live, POST to a Google Form / Formspree endpoint (see spec doc).
+  console.log("EXAM RESULT", r);
+  if(SUBMIT_ENDPOINT){
+    fetch(SUBMIT_ENDPOINT,{method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify(r)})
+      .catch(e=>console.warn('submit failed',e));
+  }
+}
+
+// ====== TRAINER PANEL ======
+document.getElementById('trainerBtn').onclick=()=>{
+  if(document.getElementById('trainerCode').value!==TRAINER_CODE){alert('Incorrect trainer code.');return;}
+  if(!LAST_RESULT){alert('No result yet.');return;}
+  const r=LAST_RESULT;
+  document.getElementById('trainerResult').innerHTML=`
+    <div class="result-big">${r.score}<span style="font-size:22px;color:var(--muted)">/${r.total}</span></div>
+    <span class="badge ${r.passed?'pass':'fail'}">${r.passed?'PASS':'FAIL'}</span>
+    <div style="margin-top:18px">
+      <div class="stat"><span>Trainee</span><strong>${r.traineeName} (${r.traineeId})</strong></div>
+      <div class="stat"><span>Score</span><strong>${r.score} / ${r.total} (${r.percent}%)</strong></div>
+      <div class="stat"><span>Pass mark</span><strong>${r.passMark}</strong></div>
+      <div class="stat"><span>Time used</span><strong>${r.timeUsedMinutes} min ${r.autoSubmitted?'(auto-submitted)':''}</strong></div>
+      <div class="stat"><span>Submitted</span><strong>${new Date(r.submittedAt).toLocaleString()}</strong></div>
+    </div>`;
+  document.getElementById('trainerPanel').classList.remove('hidden');
+};
+
+function show(id){['loginCard','dashCard','examCard','thanksCard'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
+</script>
+</body>
+</html>

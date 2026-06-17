@@ -1,0 +1,7 @@
+{
+  "_comment": "Admin-assigned trainee IDs. Add one entry per trainee. The 'id' is what they type to log in. 'pin' is optional extra security.",
+  "trainees": [
+    { "id": "RBT-2026-001", "name": "Demo Trainee", "pin": "1234" },
+    { "id": "RBT-2026-002", "name": "Jane Doe", "pin": "5678" }
+  ]
+}
