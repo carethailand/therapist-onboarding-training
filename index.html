@@ -147,8 +147,8 @@ const MANUAL_FILE = "Onboarding-Manual-2026.pdf";  // training manual served fro
 let TRAINEES = [], EXAM = null, SESSION = null, TIMER = null, REMAINING = 0, START_TS = 0;
 let LAST_RESULT = null;
 
-// Course links (edit these to your real Canva share links)
-const COURSES = [
+// Course links: live from your Google Sheet (Courses tab). These are only a fallback if the Sheet can't be reached.
+let COURSES = [
   {title:"Module 1 — ABA Foundations", desc:"Three-part contingency, reinforcement, operant conditioning", url:"https://www.canva.com/"},
   {title:"Module 2 — Autism & Functions of Behavior", desc:"ASD, FBA, four functions, motivating operations", url:"https://www.canva.com/"},
   {title:"Module 3 — Teaching Procedures", desc:"Prompting, DTT, chaining, shaping, verbal operants", url:"https://www.canva.com/"},
@@ -156,17 +156,35 @@ const COURSES = [
 ];
 
 // ====== LOAD DATA ======
+// Exam content always comes from questions.json (in the repo).
+// Trainees + courses come LIVE from your Google Sheet via the Apps Script endpoint,
+// so the admin manages them in the spreadsheet — no code editing.
+// If the Sheet can't be reached, we fall back to trainees.json / the default COURSES list.
 async function loadData(){
+  // Exam questions (required)
   try{
-    const [t,e] = await Promise.all([
-      fetch('trainees.json').then(r=>r.json()),
-      fetch('questions.json').then(r=>r.json())
-    ]);
-    TRAINEES = t.trainees; EXAM = e;
+    EXAM = await fetch('questions.json').then(r=>r.json());
   }catch(err){
     document.getElementById('loginErr').textContent =
-      "Could not load data files. (When testing locally, run a local server — see the spec doc.)";
+      "Could not load exam file. (Testing locally? Run a local server — see the spec doc.)";
   }
+  // Trainees from Sheet, fallback to local file
+  try{
+    if(SUBMIT_ENDPOINT){
+      const t = await fetch(SUBMIT_ENDPOINT + '?type=trainees').then(r=>r.json());
+      if(t && t.trainees && t.trainees.length) TRAINEES = t.trainees;
+    }
+  }catch(err){ /* fall through to local */ }
+  if(!TRAINEES.length){
+    try{ const t = await fetch('trainees.json').then(r=>r.json()); TRAINEES = t.trainees; }catch(e){}
+  }
+  // Courses from Sheet, fallback to default list
+  try{
+    if(SUBMIT_ENDPOINT){
+      const c = await fetch(SUBMIT_ENDPOINT + '?type=courses').then(r=>r.json());
+      if(c && c.courses && c.courses.length) COURSES = c.courses;
+    }
+  }catch(err){ /* keep default COURSES */ }
 }
 loadData();
 
