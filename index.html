@@ -61,9 +61,14 @@
   .note{background:#fff8ec;border:1px solid #f0dcb4;border-radius:10px;padding:12px 14px;font-size:13px;color:#7a5a16;margin-top:14px}
   .stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
   footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+  .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-120%);
+    background:var(--warn);color:#fff;padding:14px 22px;border-radius:10px;font-weight:600;
+    box-shadow:0 6px 20px rgba(0,0,0,.18);z-index:1000;transition:transform .4s ease;max-width:90%;text-align:center}
+  .toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
+<div class="toast" id="toast"></div>
 <header>
   <div class="logo">🧠 Therapist Training Portal</div>
   <div class="who" id="whoami"></div>
@@ -72,33 +77,33 @@
 
   <!-- LOGIN -->
   <div class="card" id="loginCard">
-    <h1>Welcome</h1>
-    <p class="lead">Self-paced learning &amp; pre-certification exam. Enter the Trainee ID assigned to you by your trainer.</p>
+    <h1>Welcome — we're happy you're here 👋</h1>
+    <p class="lead">We're so glad you're here. This is your space to learn at your own pace and get ready for your exam. Enter the Trainee ID your trainer gave you to begin — you've got this!</p>
     <label for="tid">Trainee ID</label>
     <input type="text" id="tid" placeholder="e.g. RBT-2026-001" autocomplete="off">
     <label for="pin">PIN</label>
     <input type="password" id="pin" placeholder="4-digit PIN" autocomplete="off">
     <div class="err" id="loginErr"></div>
-    <button class="btn" id="loginBtn" style="margin-top:14px">Log in</button>
+    <button class="btn" id="loginBtn" style="margin-top:14px">Let's begin</button>
   </div>
 
   <!-- DASHBOARD -->
   <div class="hidden" id="dashCard">
     <div class="card">
       <h2>📚 Self-Paced Coursework</h2>
-      <p class="lead">Work through each module in Canva before attempting the exam.</p>
+      <p class="lead">Take your time with each module — there's no rush. Explore them in Canva whenever you're ready, and revisit anything as often as you like.</p>
       <a class="btn" id="manualBtn" href="#" download style="margin-bottom:18px">⬇ Download Training Manual (PDF)</a>
       <div id="courseList"></div>
     </div>
     <div class="card">
       <h2>📝 Pre-Certification Exam</h2>
-      <p class="lead">When you are ready, start the exam. You will have <strong>2 hours</strong>. The exam auto-submits when time runs out.</p>
+      <p class="lead">When you feel ready, you can begin. You'll have a comfortable <strong>2 hours</strong> to complete it, and it will submit automatically when the time is up — so you can focus fully on doing your best.</p>
       <ul style="font-size:14px;color:var(--muted)">
         <li>Questions appear in <strong>random order</strong>.</li>
-        <li>Your <strong>time</strong> and <strong>score</strong> are recorded automatically.</li>
-        <li>You may only take the exam <strong>once</strong> per session.</li>
+        <li>Everything is saved for you automatically — no need to worry about it.</li>
+        <li>This is a <strong>one-time</strong> exam, so settle in somewhere quiet and comfortable before you start.</li>
       </ul>
-      <button class="btn" id="startExamBtn" style="margin-top:8px">Start Exam</button>
+      <button class="btn" id="startExamBtn" style="margin-top:8px">I'm ready — start the exam</button>
     </div>
   </div>
 
@@ -110,7 +115,7 @@
       <div class="progress"><div id="progBar"></div></div>
       <div id="questions" style="margin-top:18px"></div>
       <div style="margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-        <button class="btn" id="submitBtn">Submit Exam</button>
+        <button class="btn" id="submitBtn">Submit my exam</button>
         <span id="answeredCount" style="font-size:13px;color:var(--muted)"></span>
       </div>
     </div>
@@ -120,9 +125,9 @@
   <div class="hidden" id="thanksCard">
     <div class="card" style="text-align:center;padding:46px 24px">
       <div style="font-size:52px">✅</div>
-      <h1>Thank you for submitting</h1>
-      <p class="lead" style="font-size:16px">Your exam has been received. We will get in touch with you regarding your result.</p>
-      <p style="font-size:13px;color:var(--muted)">You may now close this window.</p>
+      <h1>Wonderful work — thank you!</h1>
+      <p class="lead" style="font-size:16px">Your exam has been received, and we're proud of the effort you put in. Your trainer will be in touch with you soon about the next step. Take a well-deserved break!</p>
+      <p style="font-size:13px;color:var(--muted)">You're all set — you can close this window whenever you're ready.</p>
     </div>
     <!-- Trainer-only result panel: hidden from trainee. Toggle by typing the trainer code. -->
     <div class="card hidden" id="trainerPanel">
@@ -146,6 +151,7 @@ const MANUAL_FILE = "Onboarding-Manual-2026.pdf";  // training manual served fro
 
 let TRAINEES = [], EXAM = null, SESSION = null, TIMER = null, REMAINING = 0, START_TS = 0;
 let LAST_RESULT = null;
+let WARNED_10 = false;
 
 // Course links: live from your Google Sheet (Courses tab). These are only a fallback if the Sheet can't be reached.
 let COURSES = [
@@ -311,14 +317,20 @@ function updateAnswered(){
 }
 
 // ====== TIMER ======
+function showToast(msg, ms){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), ms||6000);
+}
 function startTimer(sec){
-  REMAINING=sec; START_TS=Date.now();
+  REMAINING=sec; START_TS=Date.now(); WARNED_10=false;
   tick(); TIMER=setInterval(tick,1000);
 }
 function tick(){
   const c=document.getElementById('clock'), t=document.getElementById('timer');
   const h=Math.floor(REMAINING/3600), m=Math.floor((REMAINING%3600)/60), s=REMAINING%60;
   c.textContent=`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if(!WARNED_10 && REMAINING<=600 && REMAINING>=595){ WARNED_10=true; showToast('🌟 About 10 minutes left — you are doing great. Finish at your own pace.', 7000); }
   t.classList.toggle('warn', REMAINING<=600 && REMAINING>120);
   t.classList.toggle('danger', REMAINING<=120);
   if(REMAINING<=0){clearInterval(TIMER); submitExam(true); return;}
@@ -328,7 +340,7 @@ function tick(){
 // ====== SUBMIT & SCORE ======
 document.getElementById('submitBtn').onclick=()=>{
   const done=document.getElementById('answeredCount').textContent;
-  if(!confirm(`You answered ${done}.\n\nSubmit your exam now? You cannot change answers after submitting.`)) return;
+  if(!confirm(`You have answered ${done}.\n\nReady to submit? Once you do, your answers are final — and that is perfectly okay. Take a moment to review if you like, then submit when you feel good about it.`)) return;
   submitExam(false);
 };
 
@@ -381,11 +393,11 @@ function checkAlreadyTaken(){
   const btn = document.getElementById('startExamBtn');
   if(done){
     btn.disabled = true;
-    btn.textContent = 'Exam already completed';
+    btn.textContent = 'Exam completed — thank you!';
     let m = document.getElementById('takenMsg');
     if(!m){ m=document.createElement('p'); m.id='takenMsg'; m.style.cssText='color:var(--bad);font-size:14px;font-weight:600;margin-top:10px';
       btn.parentNode.appendChild(m); }
-    m.textContent = 'You have already submitted this exam. Each trainee may take it once. Contact your trainer if you need a reset.';
+    m.textContent = 'You have already completed this exam — nice job! It is designed to be taken once. If you need anything, your trainer is happy to help.';
   }
 }
 function recordResult(r){
